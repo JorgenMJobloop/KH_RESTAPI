@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http;
 
 
 [ApiController]
@@ -25,6 +26,12 @@ public class MoviesController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] Movies movies)
     {
-        return CreatedAtAction(nameof(Get), new { id = movies.Id, title = movies.Title, director = movies.Director, releaseYear = movies.ReleaseYear }, movies);
+        if (movies == null)
+        {
+            return BadRequest("Movie is null!");
+        }
+
+        _movies.Add(movies);
+        return CreatedAtAction(nameof(Post), new { id = movies.Id, title = movies.Title, director = movies.Director, releaseYear = movies.ReleaseYear, movies.ImageURL }, movies);
     }
 }
