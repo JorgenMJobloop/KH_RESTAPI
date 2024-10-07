@@ -8,7 +8,7 @@ using Microsoft.Net.Http;
 public class MoviesController : ControllerBase
 {
     private static List<Movies> _movies = new List<Movies> {
-            new Movies {Id = 1, Title = "The Shawshank Redemption", Director = "Frank Darabont", ReleaseYear = 1994, ImageURL = "images/1.png"},
+            new Movies {Id = 1, Title = "The Shawshank Redemption", Director = "Frank Darabont", ReleaseYear = 1994, ImageURL = "./images/1.png"},
             new Movies {Id = 2, Title = "The Godfather", Director = "Francis Ford Coppola", ReleaseYear = 1972, ImageURL = "images/2.png"},
             new Movies {Id = 3, Title = "Schindlers List", Director = "Steven Spielberg", ReleaseYear = 1993, ImageURL = "images/3.png"},
             new Movies {Id = 4, Title = "Pulp Fiction", Director = "Quentin Tarantino", ReleaseYear = 1994, ImageURL = "images/4.png"},
