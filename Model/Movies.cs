@@ -7,5 +7,4 @@ public class Movies
 
     public int ReleaseYear { get; set; }
 
-    public string? ImageURL { get; set; }
 }
