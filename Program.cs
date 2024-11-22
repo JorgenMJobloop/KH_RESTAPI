@@ -7,7 +7,6 @@ namespace MovieAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -15,7 +14,15 @@ namespace MovieAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            builder.Logging.AddConsole();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("Count-Disposition");
+                });
+            });
+            builder.Services.AddLogging();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,12 +33,9 @@ namespace MovieAPI
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
+            app.UseCors("AllowAll");
             app.MapControllers();
-
             app.Run();
         }
     }
