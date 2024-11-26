@@ -6,15 +6,16 @@ namespace MovieAPI
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Logging.AddConsole();
+            // CORS user-spesifications
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
@@ -32,8 +33,13 @@ namespace MovieAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+            // https redirection, currently not working
             app.UseHttpsRedirection();
             app.UseAuthorization();
+            // allowing CORS
             app.UseCors("AllowAll");
             app.MapControllers();
             app.Run();

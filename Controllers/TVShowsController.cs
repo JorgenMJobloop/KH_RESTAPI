@@ -28,9 +28,8 @@ namespace MovieAPI.Controllers
                 _context.TVShows.AddRange(_tvShows);
                 _context.SaveChanges();
             }
-
-
         }
+
         [HttpGet]
         public IEnumerable<TVShows> Get()
         {

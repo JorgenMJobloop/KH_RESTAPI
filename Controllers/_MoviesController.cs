@@ -6,6 +6,7 @@ using System.Linq;
 [Route("api/movies")]
 public class _MoviesController : ControllerBase
 {
+    // created a readonly field, that adds a DB context to the controller
     private readonly AppDbContext _context;
 
     public _MoviesController(AppDbContext context)
@@ -26,6 +27,7 @@ public class _MoviesController : ControllerBase
     [HttpGet]
     public ActionResult<IEnumerable<Movies>> GetMovies()
     {
+        // return the existing field data from my database and "convert" it to a list
         return _context.Movies.ToList();
     }
 
@@ -38,8 +40,10 @@ public class _MoviesController : ControllerBase
             return BadRequest("Movie is null!");
         }
 
+        // if our movies are not null, we add the POST-request data to our database fields as a new C# object
         _context.Add(movies);
         _context.SaveChanges();
+        // return a new object when a POST request is successfully recieved and correctly formatted
         return CreatedAtAction(nameof(Post), new { id = movies.Id, title = movies.Title, director = movies.Director, releaseYear = movies.ReleaseYear }, movies);
     }
 }
