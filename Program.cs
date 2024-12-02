@@ -15,7 +15,9 @@ namespace MovieAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Logging.AddConsole();
-            // CORS user-spesifications
+            // Below is test code on lines 21 to 27, do not publish these to production!
+            // CORS user-spesifications, this is done to support CORS on Localhost on the same server when testing the monorepos Frontend, as ASP.NET by default disallows same-site origin fetch requests from the frontend.
+            // See the comments above, and do not push this code to production!
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", builder =>
@@ -37,9 +39,10 @@ namespace MovieAPI
 
             app.UseStaticFiles();
             // https redirection, currently not working
+            // this must be fixed before code can be pushed to production!
             app.UseHttpsRedirection();
             app.UseAuthorization();
-            // allowing CORS
+            // allowing CORS, test code only! Do not push to production!
             app.UseCors("AllowAll");
             app.MapControllers();
             app.Run();
